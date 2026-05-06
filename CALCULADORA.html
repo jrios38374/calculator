@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Ahorro Logístico | Compactación de Residuos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .logos-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 50px;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            max-width: 200px;
+            height: auto;
+            max-height: 80px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #a5be00;
+            margin-bottom: 12px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #5a6c7d;
+            font-weight: 400;
+        }
+
+        .tagline {
+            display: inline-block;
+            background: #f0f7e6;
+            color: #a5be00;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 16px;
+        }
+
+        .form-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            margin-bottom: 40px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e7ff;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #a5be00;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(165, 190, 0, 0.1);
+        }
+
+        input[type="number"]::placeholder {
+            color: #8b95a7;
+        }
+
+        .input-hint {
+            font-size: 12px;
+            color: #8b95a7;
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        .error-message {
+            font-size: 12px;
+            color: #d32f2f;
+            margin-top: 6px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        input[type="number"].invalid {
+            border-color: #d32f2f;
+            background: #ffebee;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        button {
+            padding: 16px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-calculate {
+            flex: 1;
+            background: linear-gradient(135deg, #a5be00 0%, #8fa000 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(165, 190, 0, 0.3);
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(165, 190, 0, 0.4);
+        }
+
+        .btn-calculate:active {
+            transform: translateY(0);
+        }
+
+        .btn-reset {
+            flex: 0.5;
+            background: #e8ecf1;
+            color: #5a6c7d;
+        }
+
+        .btn-reset:hover {
+            background: #d8dce4;
+        }
+
+        .validation-error {
+            background: #ffebee;
+            border-left: 4px solid #d32f2f;
+            padding: 16px;
+            border-radius: 6px;
+            color: #c62828;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .validation-error.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .form-section {
+                padding: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-reset {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .form-section {
+                padding: 16px;
+                margin-bottom: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logos-section">
+            <img src="https://www.macpresse.com/wp-content/themes/macpresse-new/assets/img/logo.svg" alt="MACPRESSE EUROPA" class="logo" id="logo-macpresse">
+            <img src="https://gtaambiental.com/wp-content/uploads/gta-ambiental-logo-color.svg" alt="GTA Ambiental" class="logo" id="logo-gta">
+        </div>
+
+        <div class="header">
+            <h1>Descubre cuánto estás perdiendo por no compactar</h1>
+            <p>Calcula tu ahorro en menos de 30 segundos</p>
+            <span class="tagline">Herramienta de diagnóstico logístico</span>
+        </div>
+
+        <div class="form-section">
+            <form id="calculatorForm">
+                <div class="validation-error" id="validationError"></div>
+
+                <div class="form-group">
+                    <label for="tonnage">Toneladas de papel/cartón al mes</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="number" 
+                            id="tonnage" 
+                            placeholder="Ej: 15" 
+                            min="0" 
+                            step="0.01"
+                        >
+                    </div>
+                    <div class="input-hint">Volumen aproximado de residuos generados mensualmente</div>
+                    <div class="error-message" id="tonnageError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="collections">Número de recolecciones mensuales</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="number" 
+                            id="collections" 
+                            placeholder="Ej: 8" 
+                            min="0" 
+                            step="1"
+                        >
+                    </div>
+                    <div class="input-hint">Cantidad de viajes del camión recolector por mes</div>
+                    <div class="error-message" id="collectionsError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cost">Costo por recolección (MXN)</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="number" 
+                            id="cost" 
+                            placeholder="Ej: 2500" 
+                            min="0" 
+                            step="0.01"
+                        >
+                    </div>
+                    <div class="input-hint">Tarifa que pagas al servicio de recolección</div>
+                    <div class="error-message" id="costError"></div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-calculate" id="calculateBtn">Calcular ahorro</button>
+                    <button type="reset" class="btn-reset">Limpiar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const tonnageInput = document.getElementById('tonnage');
+        const collectionsInput = document.getElementById('collections');
+        const costInput = document.getElementById('cost');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const validationError = document.getElementById('validationError');
+        const form = document.getElementById('calculatorForm');
+
+        const MACPRESSE_COST = 250000;
+
+        function validateForm() {
+            const tonnage = tonnageInput.value;
+            const collections = collectionsInput.value;
+            const cost = costInput.value;
+
+            validationError.classList.remove('show');
+
+            if (!tonnage || !collections || !cost) {
+                validationError.textContent = 'Por favor completa todos los campos.';
+                validationError.classList.add('show');
+                return false;
+            }
+
+            const tonnageNum = parseFloat(tonnage);
+            const collectionsNum = parseFloat(collections);
+            const costNum = parseFloat(cost);
+
+            if (isNaN(tonnageNum) || tonnageNum <= 0) {
+                validationError.textContent = 'Las toneladas deben ser mayor a 0.';
+                validationError.classList.add('show');
+                return false;
+            }
+
+            if (isNaN(collectionsNum) || collectionsNum <= 0) {
+                validationError.textContent = 'Las recolecciones deben ser mayor a 0.';
+                validationError.classList.add('show');
+                return false;
+            }
+
+            if (isNaN(costNum) || costNum <= 0) {
+                validationError.textContent = 'El costo debe ser mayor a 0.';
+                validationError.classList.add('show');
+                return false;
+            }
+
+            return { tonnageNum, collectionsNum, costNum };
+        }
+
+        calculateBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const validation = validateForm();
+            if (!validation) return;
+
+            const { tonnageNum, collectionsNum, costNum } = validation;
+
+            // Cálculos
+            const currentCost = collectionsNum * costNum;
+            const newCollections = collectionsNum * 0.6;
+            const newCost = newCollections * costNum;
+            const monthlySavings = currentCost - newCost;
+            const percentageSavings = (monthlySavings / currentCost) * 100;
+            const roiMonths = monthlySavings > 0 ? (MACPRESSE_COST / monthlySavings).toFixed(1) : 0;
+            const annualSavings = monthlySavings * 12;
+
+            // Guardar en localStorage
+            const resultData = {
+                tonnage: tonnageNum,
+                collections: collectionsNum,
+                cost: costNum,
+                currentCost: currentCost,
+                newCost: newCost,
+                monthlySavings: monthlySavings,
+                percentageSavings: percentageSavings,
+                roiMonths: roiMonths,
+                annualSavings: annualSavings,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('calculatorResults', JSON.stringify(resultData));
+            
+            // Redirigir a resultados
+            window.location.href = 'resultados.html';
+        });
+
+        form.addEventListener('reset', () => {
+            validationError.classList.remove('show');
+        });
+    </script>
+</body>
+</html>
