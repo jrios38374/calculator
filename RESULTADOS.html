@@ -653,9 +653,9 @@
 					<div class="compaction-subtitle">Situación actual (sin compactar)</div>
 				</div>
 				<div class="compaction-card highlight">
-					<div class="compaction-label">Espacio ocupado sin compactar</div>
+					<div class="compaction-label">Espacio equivalente a residuos sin compactar</div>
 					<div class="compaction-value" id="compactedTonnageDisplay">-</div>
-					<div class="compaction-subtitle">Equivalente a tu volumen actual</div>
+					<div class="compaction-subtitle">Reducción del 75% en volumen</div>
 				</div>
 			</div>
 			<div class="compaction-grid">
@@ -799,11 +799,11 @@
 
 			// Reducción de volumen con compactación
 			const compactionReduction = 0.75;
-			const compactedTonnage = data.tonnage * (1 - compactionReduction);
+			const compactedTonnage = data.tonnage * compactionReduction;
 			const spaceReduction = ((1 - compactionReduction) * 100).toFixed(0);
 
 			document.getElementById('currentTonnageDisplay').textContent = formatNumber(data.tonnage);
-			document.getElementById('compactedTonnageDisplay').textContent = formatNumber(data.tonnage);
+			document.getElementById('compactedTonnageDisplay').textContent = formatNumber(compactedTonnage);
 			document.getElementById('spaceReductionDisplay').textContent = spaceReduction + '%';
 
 			// Tabla comparativa
