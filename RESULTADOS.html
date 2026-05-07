@@ -194,7 +194,7 @@
 
 		.metrics-grid {
 			display: grid;
-			grid-template-columns: repeat(3, 1fr);
+			grid-template-columns: repeat(2, 1fr);
 			gap: 20px;
 		}
 
@@ -634,10 +634,6 @@
 					<div class="metric-label">Ahorro anual</div>
 				</div>
 				<div class="metric-item">
-					<div class="metric-value" id="roiMonthsDisplay">-</div>
-					<div class="metric-label">Meses para ROI</div>
-				</div>
-				<div class="metric-item">
 					<div class="metric-value" id="collectionsReductionDisplay">-</div>
 					<div class="metric-label">Menos recolecciones</div>
 				</div>
@@ -653,20 +649,20 @@
 					<div class="compaction-subtitle">Situación actual (sin compactar)</div>
 				</div>
 				<div class="compaction-card highlight">
-					<div class="compaction-label">Espacio equivalente a residuos sin compactar</div>
+					<div class="compaction-label">Espacio equivalente a toneladas sin compactar</div>
 					<div class="compaction-value" id="compactedTonnageDisplay">-</div>
-					<div class="compaction-subtitle">Reducción del 75% en volumen</div>
+					<div class="compaction-subtitle">Reducción del 65% en volumen</div>
 				</div>
 			</div>
 			<div class="compaction-grid">
 				<div class="compaction-card highlight" style="grid-column: 1 / -1;">
-					<div class="compaction-label">Reducción de espacio</div>
+					<div class="compaction-label">Espacio útil compactado</div>
 					<div class="compaction-value" id="spaceReductionDisplay">-</div>
 					<div class="compaction-subtitle">Porcentaje de espacio utilizado después de compactar</div>
 				</div>
 			</div>
 			<div class="compaction-disclaimer">
-				📌 <strong>Explicación:</strong> Con una prensa Macpresse, reduces el volumen de tus residuos en un 75% gracias a la compresión. Esto significa que en lugar de ocupar 100% del espacio, ahora solo utilizas el 25%, optimizando significativamente tu almacenamiento y reduciendo viajes de recolección.
+				📌 <strong>Explicación:</strong> Con una prensa Macpresse, reduces el volumen de tus residuos en un 65% gracias a la compresión. Esto significa que en lugar de ocupar 100% del espacio, ahora solo utilizas el 35%, optimizando significativamente tu almacenamiento y reduciendo viajes de recolección.
 			</div>
 		</div>
 
@@ -701,7 +697,7 @@
 		<div class="benefit-box">
 			<div class="benefit-title">¿Cómo lograr estos ahorros?</div>
 			<div class="benefit-text">
-				Con una prensa Macpresse, reduces tus recolecciones en un 40%, disminuyendo significativamente tu costo logístico. 
+				Con una prensa Macpresse, reduces tus recolecciones en un 35%, disminuyendo significativamente tu costo logístico. 
 				Tu inversión se recupera rápidamente y comenzarás a acumular ganancias desde el primer mes.
 			</div>
 		</div>
@@ -791,15 +787,14 @@
 
 			// Métricas clave
 			document.getElementById('annualSavingsDisplay').textContent = formatCurrency(data.annualSavings);
-			document.getElementById('roiMonthsDisplay').textContent = data.roiMonths;
 			
 			const newCollections = data.collections * 0.6;
 			const reductionCollections = Math.round(data.collections - newCollections);
 			document.getElementById('collectionsReductionDisplay').textContent = reductionCollections;
 
 			// Reducción de volumen con compactación
-			const compactionReduction = 0.75;
-			const compactedTonnage = data.tonnage * compactionReduction;
+			const compactionReduction = 0.65;
+			const compactedTonnage = data.tonnage * (1 - compactionReduction);
 			const spaceReduction = ((1 - compactionReduction) * 100).toFixed(0);
 
 			document.getElementById('currentTonnageDisplay').textContent = formatNumber(data.tonnage);
